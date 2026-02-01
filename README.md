@@ -137,7 +137,7 @@ response_file : 被动模式响应文件
 
 无GC、无抖动，运行稳定
 
-如图配置下，实测CPU占用5%~10%，内存占用50MB左右，开启ASN/指纹规则查询后，内存占用200~300MB
+如图配置下，实测CPU占用5%-10%，内存占用50MB左右，开启ASN/指纹规则查询后，内存占用200-300MB
 
 ![Hprobe Screenshot](assets/psx.png)
 
