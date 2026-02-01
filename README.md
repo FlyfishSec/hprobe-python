@@ -12,6 +12,17 @@ A high-performance HTTP probing tool for asset discovery.
 
 ---
 
+## Core Advantages 📌| 核心优势
+
+1. **Tokio 异步运行时，极致高并发**
+   - 基于 Tokio 异步运行时构建，充分利用多核性能，支撑大规模高并发探测
+
+2. **纳秒级 ASN 查询**  
+   - 自定义二进制结构体，采用零拷贝设计 + mmap 内存映射 + 二分查找，实现纳秒级 ASN 信息查询
+
+3. **极速 Web 指纹识别**  
+   - 集成 17000 + 指纹规则，进程内单例懒加载，10MB HTML 毫秒级指纹识别
+
 ## Quick Start⚡| 快速开始
 
 ```bash
@@ -102,34 +113,88 @@ if __name__ == "__main__":
 
 ```
 
-参数配置说明
-target : 目标 IP 或域名
 
-ports : 探测端口列表
+## ⚙️ 参数配置说明
 
-threads : 并发线程数
+> 所有同步 / 异步接口共用以下参数配置
 
-timeout : 单请求超时时间（秒）
+---
 
-max_redirects : 最大重定向次数
+### 🔹 基础参数
 
-methods : HTTP 方法（GET/POST）
+- **`target`**  
+  扫描目标，支持 IP 或域名
 
-scheme_policy : 协议策略（Auto/HTTP/HTTPS）
+- **`ports`**  
+  探测端口列表，例如：`[80, 443]`
 
-user_agent : 自定义 User-Agent
+- **`threads`**  
+  并发线程数，用于控制整体并发规模
 
-asn / tech_detect / fingerprint / screenshot / common_ports : 功能开关
+- **`timeout`**  
+  单请求超时时间（单位：秒）
 
-silent : 是否静默模式（仅输出结果，不打印日志）
+- **`methods`**  
+  HTTP 请求方法：`GET` / `POST`
 
-post_data / post_file : POST 数据或文件
+- **`scheme_policy`**  
+  协议策略：`Auto` / `HTTP` / `HTTPS`
 
-content_type : POST Content-Type
+---
 
-mode : active/passive
+### 🔹 HTTP / 请求相关参数
 
-response_file : 被动模式响应文件
+- **`user_agent`**  
+  自定义 User-Agent，默认使用内置值
+
+- **`max_redirects`**  
+  最大重定向次数
+
+- **`post_data`**  
+  POST 请求体数据（字符串）
+
+- **`post_file`**  
+  POST 文件路径（与 `post_data` 二选一）
+
+- **`content_type`**  
+  POST 请求 Content-Type  
+  默认值：`application/x-www-form-urlencoded`
+
+---
+
+### 🔹 功能开关（布尔值）
+
+- **`asn`**  
+  是否启用 ASN 查询
+
+- **`tech_detect`**  
+  是否启用技术栈识别
+
+- **`fingerprint`**  
+  是否启用 Web 指纹识别
+
+- **`screenshot`**  
+  是否启用网页截图
+
+- **`common_ports`**  
+  是否启用常见端口扫描
+
+---
+
+### 🔹 运行模式相关
+
+- **`mode`**  
+  运行模式：`active` / `passive`
+
+- **`response_file`**  
+  被动模式响应文件（仅 `passive` 模式需要）
+
+---
+
+### 🔹 其他参数
+
+- **`silent`**  
+  静默模式，仅输出结果，不打印日志
 
 ## 🖼 应用示例 / Example
 
@@ -143,17 +208,6 @@ response_file : 被动模式响应文件
 - **内存占用**：50 MB 左右  
 - **启用 ASN查询**：内存占用约 100 MB
 - **启用 wappalyzer/指纹规则查询后**：内存占用约 100–300 MB (随规则命中数缓慢递增)  
-
-### 核心优势
-
-1. **Tokio 异步运行时，极致高并发**
-   - 基于 Tokio 异步运行时构建，充分利用多核性能，支撑大规模高并发探测
-
-2. **纳秒级 ASN 查询**  
-   - 自定义二进制结构体，采用零拷贝设计 + mmap 内存映射 + 二分查找，实现纳秒级 ASN 信息查询
-
-3. **极速 Web 指纹识别**  
-   - 集成 17000 + 指纹规则，进程内单例懒加载，10MB HTML 毫秒级指纹识别
 
 ![Hprobe Screenshot](assets/psx.png)
 
