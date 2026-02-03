@@ -32,97 +32,70 @@ A high-performance HTTP probing tool for asset discovery.
 pip install hprobe
 ```
 
-下面示例展示了 同步调用 和 异步调用，以及两种调用方式：参数化接口和字典接口。
+### 示例1 同步快速调用(配置字典调用)
 
-```bash
-import os
+```python
+import hprobe
+
+# 核心配置
+CORE_CONFIG = {
+    # 目标支持ip/domain/url，示例：192.168.1.1/example.com/192.168.1.1:443/https://example.com
+    "target": "example.com",  # 必选
+    "ports": [80, 443],       # 可选：探测端口，不填则使用自动端口识别
+    "timeout": 5.0,           # 可选：超时配置，默认10s
+    "threads": 64,            # 可选：并发数配置，默认80
+    "tls_info": True,         # 可选：开启TLS证书信息检测
+    "asn": True,              # 可选：开启ASN归属查询
+    "tech_detect": True,      # 可选：开启技术栈识别
+    "fingerprint": True       # 可选：开启Web指纹识别
+    "silent": True,           # 可选：禁用命令行冗余日志
+}
+
+# 一行调用（字典接口，推荐）
+result = hprobe.scan_target_with_config(CORE_CONFIG)
+# 打印结果（返回字典，含所有探测信息）
+print("探测结果：", result)
+```
+
+### 示例2 异步快速调用(配置字典调用)
+
+```python
 import asyncio
 import hprobe
 
-# -------------------------------
-# 全局唯一配置（所有方法共用）
-# -------------------------------
-UNIFIED_CONFIG = {
-    "target": "192.168.1.1",      # 统一目标
-    "ports": [80],                # 统一端口
-    "threads": 80,
-    "timeout": 5.0,
-    "max_redirects": 3,
-    "methods": "GET",
-    "scheme_policy": "Auto",
-    "user_agent": None,
-    "asn": False,
-    "tech_detect": False,
-    "fingerprint": False,
-    "screenshot": False,
-    "common_ports": False,
-    "silent": True,
-    "dns": [],
-    "proxy": None,
-    "post_data": None,
-    "post_file": None,
-    "content_type": "application/x-www-form-urlencoded",
-    "mode": "active",
-    "response_file": None,  # 被动模式响应文件，仅 passive 模式需配置
+# 核心配置
+CORE_CONFIG = {
+    # 目标支持ip/domain/cidr/url
+    # 示例：192.168.1.1、example.com、192.168.1.1:443、192.168.1.1/24、https://example.com
+    "target": "192.168.1.1/24",  # 必选
+    "ports": [80, 443],       # 可选：探测端口，不填则使用自动端口识别
+    "timeout": 5.0,           # 可选：超时配置，默认10s
+    "threads": 64,            # 可选：并发数配置，默认80
+    "tls_info": True,         # 可选：开启TLS证书信息检测
+    "asn": True,              # 可选：开启ASN归属查询
+    "tech_detect": True,      # 可选：开启技术栈识别
+    "fingerprint": True       # 可选：开启Web指纹识别
+    "silent": True,           # 可选：禁用命令行冗余日志
 }
 
+async def async_core_scan():
+    # 异步字典接口，一行调用
+    result = await hprobe.scan_target_with_config_async(CORE_CONFIG)
+    print("探测结果：", result)
+
+# 执行异步函数并打印结果
+asyncio.run(async_core_scan())
+
+```
+
+## ⚙️ 进阶参数配置说明
+
+```python
 # ⚠️ 可选：自定义数据目录
 # import os
 # os.environ["HPROBE_DATA_ROOT"] = r"C:\mydata\"
 
-# 1. 同步调用
-def sync_scan_demo():
-    print("="*60)
-    print("【同步调用】参数化接口")
-    print("="*60)
-    result1 = hprobe.scan_target(**UNIFIED_CONFIG)
-    print(f"结果: {result1 if result1 else '无有效结果'}\n")
-
-    print("="*60)
-    print("【同步调用】配置字典接口")
-    print("="*60)
-    result2 = hprobe.scan_target_with_config(UNIFIED_CONFIG)
-    print(f"结果: {result2 if result2 else '无有效结果'}\n")
-
-# 2. 异步调用
-async def async_scan_demo():
-    print("="*60)
-    print("【异步调用】参数化接口")
-    print("="*60)
-    result1 = await hprobe.scan_target_async(**UNIFIED_CONFIG)
-    print(f"结果: {result1 if result1 else '无有效结果'}\n")
-
-    print("="*60)
-    print("【异步调用】配置字典接口")
-    print("="*60)
-    result2 = await hprobe.scan_target_with_config_async(UNIFIED_CONFIG)
-    print(f"结果: {result2 if result2 else '无有效结果'}\n")
-
-# 3. 主函数示例
-def main():
-    run_sync = True
-    run_async = True
-
-    if run_sync:
-        sync_scan_demo()
-
-    if run_async:
-        asyncio.run(async_scan_demo())
-
-if __name__ == "__main__":
-    main()
-    print("="*60)
-    print("所有扫描任务执行完成！")
-    print("="*60)
-
 ```
-
-
-## ⚙️ 参数配置说明
-
-> 所有同步 / 异步接口共用以下参数配置
-
----
 
 ### 🔹 基础参数
 
@@ -149,10 +122,10 @@ if __name__ == "__main__":
 ### 🔹 HTTP / 请求相关参数
 
 - **`user_agent`**  
-  自定义 User-Agent，默认使用内置值
+  自定义 User-Agent，默认使用内置随机
 
 - **`max_redirects`**  
-  最大重定向次数
+  最大重定向次数，设置为0则禁止重定向
 
 - **`post_data`**  
   POST 请求体数据（字符串）
@@ -184,16 +157,16 @@ if __name__ == "__main__":
   是否启用常见端口扫描
 
 ---
-
+<!-- 
 ### 🔹 运行模式相关
 
 - **`mode`**  
-  运行模式：`active` / `passive`
+  运行模式：`active` / `passive`，默认主动检测，python端暂不支持被动检测
 
 - **`response_file`**  
   被动模式响应文件（仅 `passive` 模式需要）
 
----
+--- -->
 
 ### 🔹 其他参数
 
@@ -204,7 +177,7 @@ if __name__ == "__main__":
   指定dns: [223.5.5.5,8.8.8.8]
   
 - **`proxy`**  
-  指定代理：socks5://127.0.0.1:1080
+  使用代理(http/https/socks)：socks5://127.0.0.1:1080
 
 ## 🖼 应用示例 / Example
 
