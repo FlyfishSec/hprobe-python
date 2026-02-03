@@ -47,7 +47,7 @@ CORE_CONFIG = {
     "tls_info": True,         # 可选：开启TLS证书信息检测
     "asn": True,              # 可选：开启ASN归属查询
     "tech_detect": True,      # 可选：开启技术栈识别
-    "fingerprint": True       # 可选：开启Web指纹识别
+    "fingerprint": True,       # 可选：开启Web指纹识别
     "silent": True,           # 可选：禁用命令行冗余日志
 }
 
@@ -74,7 +74,7 @@ CORE_CONFIG = {
     "tls_info": True,         # 可选：开启TLS证书信息检测
     "asn": True,              # 可选：开启ASN归属查询
     "tech_detect": True,      # 可选：开启技术栈识别
-    "fingerprint": True       # 可选：开启Web指纹识别
+    "fingerprint": True,      # 可选：开启Web指纹识别
     "silent": True,           # 可选：禁用命令行冗余日志
 }
 
