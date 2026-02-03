@@ -1,4 +1,4 @@
-# Hprobe 🚀
+# Hprobe 🚀 [![PyPI Downloads](https://static.pepy.tech/personalized-badge/hprobe?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/hprobe)
 
 A high-performance HTTP probing tool for asset discovery.
 
@@ -9,6 +9,8 @@ A high-performance HTTP probing tool for asset discovery.
 - 支持多线程和异步模式  
 - 可统一全局配置，方便批量调用  
 - 提供参数化和字典配置两种接口
+
+🔗 **GitHub:** [https://github.com/FlyfishSec/hprobe-python](https://github.com/FlyfishSec/hprobe-python)
 
 ---
 
@@ -55,6 +57,8 @@ UNIFIED_CONFIG = {
     "screenshot": False,
     "common_ports": False,
     "silent": True,
+    "dns": [],
+    "proxy": None,
     "post_data": None,
     "post_file": None,
     "content_type": "application/x-www-form-urlencoded",
@@ -195,6 +199,12 @@ if __name__ == "__main__":
 
 - **`silent`**  
   静默模式，仅输出结果，不打印日志
+
+- **`dns`**  
+  指定dns: [223.5.5.5,8.8.8.8]
+  
+- **`proxy`**  
+  指定代理：socks5://127.0.0.1:1080
 
 ## 🖼 应用示例 / Example
 
