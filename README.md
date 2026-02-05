@@ -88,6 +88,38 @@ asyncio.run(async_core_scan())
 
 ```
 
+### 示例3 异步极简调用(链式调用)
+
+```python
+import hprobe
+import asyncio
+
+async def simple_async_scan():
+    # 直接设置目标，其余用默认配置
+    result = await hprobe.HprobeScanner().set_target("192.168.1.1/24").set_timeout(1.0).scan_async()
+    print(f"扫描结果：共探测到{len(result)}个资产")
+    # 遍历结果取值
+    for asset in result:
+        print(f"存活资产：{asset.get('url')}，状态码：{asset.get('status_code')}")
+
+# 执行异步函数
+asyncio.run(simple_async_scan())
+
+```
+
+### 示例4 同步极简调用(链式调用)
+
+```python
+import hprobe
+
+# 同步核心：一行链式调用
+result = hprobe.HprobeScanner().set_target("httpbin.org").set_tech_detect(True).scan()
+# 简单结果展示
+if result:
+    print(f"目标{result[0].get('target')}探测完成，技术栈：{result[0].get('technologies')}")
+
+```
+
 ## ⚙️ 进阶参数配置说明
 
 ```python
