@@ -86,11 +86,7 @@ python -c "import hprobe; print(
     "tls_domain": "httpbin.org",
     "tls_probe_ip": "3.210.41.225",
     "redirect_url": "https://httpbin.org/",
-    "html_urls": [
-      "github.com",
-      "fonts.googleapis.com",
-      "kennethreitz.org"
-    ]
+    "html_urls": ["github.com", "fonts.googleapis.com", "kennethreitz.org"]
   }
 ]
 ```
