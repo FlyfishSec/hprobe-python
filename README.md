@@ -32,6 +32,90 @@ A high-performance HTTP probing tool for asset discovery.
 pip install hprobe
 ```
 
+```bash
+python -c "import hprobe; print(
+    hprobe.HprobeScanner()
+        .set_target('https://httpbin.org')
+        .set_tls_info(True)
+        .set_tech_detect(True)
+        .set_fingerprint(True)
+        .set_asn(True)
+        .scan()
+)"
+[
+  {
+    "target": "httpbin.org",
+    "resolved_ips": [
+      "3.210.41.225",
+      "3.223.36.72",
+      "52.204.75.48",
+      "54.236.169.179",
+      "44.197.91.61",
+      "3.95.121.17"
+    ],
+
+    "scheme": "https",
+    "host": "httpbin.org",
+    "url": "https://httpbin.org:443",
+    "port": 443,
+    "method": "GET",
+    "status_code": 200,
+    "title": "httpbin.org",
+    "response_time_ms": 7527,
+
+    "technologies": [
+      "Python",
+      "React",
+      "Swagger UI",
+      "gunicorn:19.9.0",
+      "jQuery"
+    ],
+    "fingerprints": ["swagger"],
+
+    "asn_info": {
+      "as_number": 14618,
+      "as_org": "AMAZON-AES",
+      "as_country": "US",
+      "as_range": ["3.208.0.0/12"]
+    },
+
+    "tls_info": {
+      "cert_issuer": "C=US, O=Amazon, CN=Amazon RSA 2048 M03",
+      "cert_subject": "CN=httpbin.org",
+      "tls_version": "TLSv1.2",
+      "tls_cipher": "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+      "cert_san": [
+        "httpbin.org",
+        "*.httpbin.org"
+      ]
+    },
+
+    "header": {
+      "server": "gunicorn/19.9.0",
+      "content-type": "text/html; charset=utf-8",
+      "content-length": "9593",
+      "connection": "keep-alive",
+      "access-control-allow-origin": "*",
+      "access-control-allow-credentials": "true"
+    },
+
+    "web_server": "gunicorn/19.9.0",
+    "content_type": "text/html; charset=utf-8",
+    "content_length": 9593,
+
+    "tls_domain": "httpbin.org",
+    "tls_probe_ip": "3.210.41.225",
+    "redirect_url": "https://httpbin.org/",
+
+    "html_urls": [
+      "github.com",
+      "fonts.googleapis.com",
+      "kennethreitz.org"
+    ]
+  }
+]
+```
+
 ### 示例1 同步快速调用(配置字典调用)
 
 ```python
@@ -79,7 +163,7 @@ CORE_CONFIG = {
 }
 
 async def async_core_scan():
-    # 异步字典接口，一行调用
+    # 异步字典接口调用
     result = await hprobe.scan_target_with_config_async(CORE_CONFIG)
     print("探测结果：", result)
 
@@ -112,7 +196,7 @@ asyncio.run(simple_async_scan())
 ```python
 import hprobe
 
-# 同步核心：一行链式调用
+# 同步链式调用
 result = hprobe.HprobeScanner().set_target("httpbin.org").set_tech_detect(True).scan()
 # 简单结果展示
 if result:
