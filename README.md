@@ -42,18 +42,13 @@ python -c "import hprobe; print(
         .set_asn(True)
         .scan()
 )"
+
 [
   {
     "target": "httpbin.org",
     "resolved_ips": [
-      "3.210.41.225",
-      "3.223.36.72",
-      "52.204.75.48",
-      "54.236.169.179",
-      "44.197.91.61",
-      "3.95.121.17"
-    ],
-
+      "3.210.41.225", "3.223.36.72", "52.204.75.48", "54.236.169.179", "44.197.91.61", "3.95.121.17"
+      ],
     "scheme": "https",
     "host": "httpbin.org",
     "url": "https://httpbin.org:443",
@@ -62,23 +57,11 @@ python -c "import hprobe; print(
     "status_code": 200,
     "title": "httpbin.org",
     "response_time_ms": 7527,
-
-    "technologies": [
-      "Python",
-      "React",
-      "Swagger UI",
-      "gunicorn:19.9.0",
-      "jQuery"
-    ],
+    "technologies": ["Python", "React", "Swagger UI", "gunicorn:19.9.0", "jQuery"],
     "fingerprints": ["swagger"],
-
     "asn_info": {
-      "as_number": 14618,
-      "as_org": "AMAZON-AES",
-      "as_country": "US",
-      "as_range": ["3.208.0.0/12"]
-    },
-
+      "as_number": 14618, "as_org": "AMAZON-AES", "as_country": "US", "as_range": ["3.208.0.0/12"]
+      },
     "tls_info": {
       "cert_issuer": "C=US, O=Amazon, CN=Amazon RSA 2048 M03",
       "cert_subject": "CN=httpbin.org",
@@ -89,7 +72,6 @@ python -c "import hprobe; print(
         "*.httpbin.org"
       ]
     },
-
     "header": {
       "server": "gunicorn/19.9.0",
       "content-type": "text/html; charset=utf-8",
@@ -98,15 +80,12 @@ python -c "import hprobe; print(
       "access-control-allow-origin": "*",
       "access-control-allow-credentials": "true"
     },
-
     "web_server": "gunicorn/19.9.0",
     "content_type": "text/html; charset=utf-8",
     "content_length": 9593,
-
     "tls_domain": "httpbin.org",
     "tls_probe_ip": "3.210.41.225",
     "redirect_url": "https://httpbin.org/",
-
     "html_urls": [
       "github.com",
       "fonts.googleapis.com",
