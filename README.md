@@ -5,11 +5,6 @@ A high-performance HTTP probing tool for asset discovery.
 `hprobe` 是一个基于 Rust 实现的 高性能 HTTP 探测引擎，提供直观易用的 Python API。
 它支持同步与异步扫描，在大规模目标场景下能够高效完成 HTTP 服务探测、TLS 信息解析以及应用指纹与技术栈识别，适用于资产发现、网络空间测绘与自动化安全评估。
 
-- 跨平台（Linux / Windows / macOS）  
-- 支持多线程和异步模式  
-- 可统一全局配置，方便批量调用  
-- 提供参数化和字典配置两种接口
-
 🔗 **GitHub:** [https://github.com/FlyfishSec/hprobe-python](https://github.com/FlyfishSec/hprobe-python)
 
 ---
